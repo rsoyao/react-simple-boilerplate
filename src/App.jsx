@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: 'Flob'}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [
     {
       id: 1,
@@ -24,6 +24,8 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.socket = new WebSocket('ws://0.0.0.0:3001')
+
     console.log("componentDidMount <App />");
     setTimeout(() => {
       console.log("Simulating incoming message");
@@ -39,7 +41,11 @@ class App extends Component {
   submitMessage = (username, inputMessage) => {
     const newMessage = {username: username, content: inputMessage, id: this.state.messages.length + 1};
     const messages = this.state.messages.concat(newMessage)
+    this.socket.send(JSON.stringify(
+      newMessage
+     ))
     this.setState({messages})
+    console.log('username', username, 'new message!!', newMessage)
   }
 
   render() {
@@ -55,3 +61,6 @@ class App extends Component {
 export default App;
 
 //send propto chat bar like onSendMessae
+
+//1. Send the message to the WS server from App.js use stringify 
+//2. Form the server console log the received message, using JSON parse

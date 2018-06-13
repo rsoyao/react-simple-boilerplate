@@ -12,14 +12,13 @@ constructor(props) {
 
 inputChange(event){
     if (event.key === 'Enter') {
-        console.log('#####', this.state)
     const inputMessage = event.target.value
     const username = this.props.users
     this.props.submitMessage(username, inputMessage);
-    console.log('this is the latest to work', event.key); 
    }
 }
 
+// ADD CLEAR FUNCTION . 
 render () {
     return (
     <footer className="chatbar">
@@ -45,3 +44,4 @@ export default ChatBar ;
 //2. insert value and onChange function into the input
 //3. value will be message. Make sure to pass through username and Inputmessage in function
 //4. on change function will be a callback, setting the state and the new input 
+
