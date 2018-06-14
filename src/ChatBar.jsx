@@ -10,27 +10,37 @@ constructor(props) {
     }
 }
 
-inputChange(event){
+inputChangeMessage(event){
     if (event.key === 'Enter') {
     const inputMessage = event.target.value
-    const username = this.props.users
-    this.props.submitMessage({username, content:inputMessage});
+    const username = this.props.user;
+    this.props.submitMessage({username: username, content:inputMessage});
    }
+}
+
+inputChangeUser(event){
+    const inputUsername = event.target.value
+    this.props.newUser(event.target.value)
 }
 
 // ADD CLEAR FUNCTION . 
 render () {
     return (
     <footer className="chatbar">
-    <input className="chatbar-username" defaultValue={ this.props.users } />
+    <input className="chatbar-username" defaultValue={ this.props.user } 
+    onBlur=
+        {this.inputChangeUser.bind(this)} />
     <input className="chatbar-message" value={this.props.messages} placeholder="Type a message and hit ENTER" 
      onKeyUp=
-       {this.inputChange.bind(this)} />
+       {this.inputChangeMessage.bind(this)} />
     </footer> 
   );
  }
 }
 export default ChatBar ; 
+
+//create a seperate function to handle the input change for the username and pass that
+//through the username input!!
 
 
 // the function we passed through props to the ChatBar component is called 
