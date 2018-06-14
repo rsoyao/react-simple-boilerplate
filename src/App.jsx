@@ -9,22 +9,22 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name: 'Flob'}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-    {
-      id: 1,
-      username: 'Bob',
-      content: 'Has anyone seen my marbles?',
-    },
-    {
-      id: 2,
-      username: 'Anonymous',
-      content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
-    }
-  ]};
-  }
+      messages: [{
+        id: 1,
+        username: 'Bob',
+        content: 'Has anyone seen my marbles?',
+      },
+      {
+        id: 2,
+        username: 'Anonymous',
+        content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
+      }]
+    };
+  };
 
   componentDidMount() {
-    this.socket = new WebSocket('ws://0.0.0.0:3001')
+    this.socket = new WebSocket('ws://0.0.0.0:3001');
+    this.socket.onmessage = this.receiveMessage;
 
     console.log("componentDidMount <App />");
     setTimeout(() => {
@@ -36,27 +36,30 @@ class App extends Component {
       // Calling setState will trigger a call to render() in App and all child components.
       this.setState({messages: messages})
     }, 3000);
+
+    
   }
 
-  submitMessage = (username, inputMessage) => {
-    const newMessage = {username: username, content: inputMessage, id: this.state.messages.length + 1};
-    const messages = this.state.messages.concat(newMessage)
+  submitMessage = (newMessage) => {
+    console.log('submitMessage', this)
     this.socket.send(JSON.stringify(
       newMessage
-     ))
-    this.setState({messages})
-    console.log('username', username, 'new message!!', newMessage)
+     ));
   }
 
-  render() {
-    return (
-      <div>
-        <NavBar />
-        <MessageList messages={ this.state.messages }/>
-        <ChatBar users={ this.state.currentUser.name } submitMessage={ this.submitMessage }/>
-      </div>
-    );
+  receiveMessage = (rawMessage) => {
+    const newMessage = JSON.parse(rawMessage.data);
+    this.setState({messages: this.state.messages.concat(newMessage)});
+    // console.log('username', username, 'new message!!', newMessage)
   }
+
+  render = () => (
+    <div>
+      <NavBar />
+      <MessageList messages={ this.state.messages }/>
+      <ChatBar users={ this.state.currentUser.name } submitMessage={ this.submitMessage }/>
+    </div>
+  )
 }
 export default App;
 

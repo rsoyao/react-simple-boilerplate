@@ -14,7 +14,7 @@ inputChange(event){
     if (event.key === 'Enter') {
     const inputMessage = event.target.value
     const username = this.props.users
-    this.props.submitMessage(username, inputMessage);
+    this.props.submitMessage({username, content:inputMessage});
    }
 }
 

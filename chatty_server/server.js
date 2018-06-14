@@ -2,6 +2,7 @@
 
 const express = require('express');
 const SocketServer = require('ws').Server;
+const uuid = require('uuid-v4');
 
 // Set the port to 3001
 const PORT = 3001;
@@ -18,14 +19,39 @@ const wss = new SocketServer({ server });
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
+
+function broadcast(data) {
+    console.log('sending', data)
+    wss.clients.forEach(function each(client) {
+        console.log('send!')
+        client.send(data);
+    });
+};
+
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
-ws.on('message', (newMessage) => {
-    const { username, content } = JSON.parse(newMessage);
+
+ws.on('message', (rawMessage) => {
+    const UUID = uuid();
+    const { username, content } = JSON.parse(rawMessage);
+    const newMessage = {
+        username,
+        content,
+        id: UUID
+    }
     console.log('user', username, 'said', content);
+
+    broadcast(JSON.stringify(newMessage));
 });
+
+
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => console.log('Client disconnected'));
 });
+
+//1. require broadcast and uuid (v4) api 
+//2. create a  function that assigns a UUID to the parsed message and stringify that ISH
+//3. implement the broadcast function. (look into documentation) ?? maybe not 
+//4. 

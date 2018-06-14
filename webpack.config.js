@@ -16,8 +16,20 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, 'src'),
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              'env',
+              'react',
+              'stage-2'
+            ],
+            plugins: [
+              'transform-class-properties'
+            ]
+          }
+        }]
       },
       {
         test: /\.scss$/,
@@ -30,3 +42,6 @@ module.exports = {
     ]
   }
 };
+
+
+//install dependencies as so and don't forget to npm install each env seperately in the same line

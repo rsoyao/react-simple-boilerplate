@@ -1,13 +1,8 @@
 {
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "es6": true
   },
   "rules": {
     "quotes": [2, "single"],
@@ -17,7 +12,7 @@
     "react/react-in-jsx-scope": 2
   },
   "plugins": [
-    "react"
+    "react" 
   ],
   "extends": ["eslint:recommended", "plugin:react/recommended"]
 }
