@@ -28,7 +28,14 @@ function broadcast(data) {
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
-
+  count = {
+      type: "clientSize",
+      clientSize: wss.clients.size
+  }
+wss.clients.forEach(client => {
+    client.send(JSON.stringify(count))
+});
+console.log(count)
 
 ws.on('message', (rawMessage) => {
     console.log('$@#$@#', rawMessage)
@@ -48,11 +55,21 @@ ws.on('message', (rawMessage) => {
     // change type message to type incoming message here
 
     console.log('newMessage: ', newMessage);
-
+    console.log(wss.clients.size);
     broadcast(JSON.stringify(newMessage));
 });
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    count = {
+        type: "clientSize",
+        clientSize: wss.clients.size
+    }
+  wss.clients.forEach(client => {
+      client.send(JSON.stringify(count))
+  });
+      console.log('Client disconnected')
+    }
+);
 });
 
 //1. require broadcast and uuid (v4) api 
