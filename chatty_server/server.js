@@ -36,6 +36,17 @@ ws.on('message', (rawMessage) => {
     const newMessage = JSON.parse(rawMessage);
     newMessage["id"] = UUID
 
+    if(newMessage.type === 'postMessage'){
+        newMessage.type = 'incomingMessage';
+        broadcast(JSON.stringify(newMessage))
+    } else if (newMessage.type === 'postNotification' ){
+        newMessage.type = 'incomingNotification';
+        broadcast(JSON.stringify(newMessage))
+    } else {
+        console.log('Unable to determine type'); ///
+    }
+    // change type message to type incoming message here
+
     console.log('newMessage: ', newMessage);
 
     broadcast(JSON.stringify(newMessage));
@@ -47,4 +58,8 @@ ws.on('message', (rawMessage) => {
 //1. require broadcast and uuid (v4) api 
 //2. create a  function that assigns a UUID to the parsed message and stringify that ISH
 //3. implement the broadcast function. (look into documentation) ?? maybe not 
-//4. 
+
+
+// Send a postNotification message to the server to notify all connected users of 
+// the name change
+// Browser receives the incomingNotification message and displays the notification

@@ -14,12 +14,12 @@ inputChangeMessage(event){
     if (event.key === 'Enter') {
     const inputMessage = event.target.value
     const username = this.props.user;
-    this.props.submitMessage({username: username, content:inputMessage});
+    this.props.submitMessage({username: username, content:inputMessage, type: "postMessage"});
+    event.target.value = '';
    }
 }
 
 inputChangeUser(event){
-    const inputUsername = event.target.value
     this.props.newUser(event.target.value)
 }
 
