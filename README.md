@@ -1,4 +1,4 @@
-React Boilerplate
+Chatty App using React
 =====================
 
 A minimal and light dev environment for ReactJS.
@@ -43,3 +43,9 @@ npm run lint
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* Express
+
+### Screenshots
+
+![Screenshot of one user](https://github.com/rsoyao/react-simple-boilerplate/blob/cbcfc6cf35f9540fcd5fb775425200666b36cc91/docs/oneUser.png)
+![Screenshot of a new user with a different username](https://github.com/rsoyao/react-simple-boilerplate/blob/cbcfc6cf35f9540fcd5fb775425200666b36cc91/docs/oneUser.png)
