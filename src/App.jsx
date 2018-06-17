@@ -18,13 +18,6 @@ class App extends Component {
     console.log('!!!!!', this.state.currentUser)
     this.socket = new WebSocket('ws://0.0.0.0:3001');
     this.socket.onmessage = this.receiveMessage;
-    // setTimeout(() => {
-    //   console.log("Simulating incoming message");
-      // Add a new message to the list of messages in the data store
-    //   const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-    //   const messages = this.state.messages.concat(newMessage)
-    //   this.setState({messages: messages})
-    // }, 3000); 
   }
   
   submitUsername = (username) => { //we know current username, get new username

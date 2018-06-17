@@ -22,8 +22,7 @@ inputChangeMessage(event){
 inputChangeUser(event){
     this.props.newUser(event.target.value)
 }
-
-// ADD CLEAR FUNCTION . 
+ 
 render () {
     return (
     <footer className="chatbar">
